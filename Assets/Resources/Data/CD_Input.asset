@@ -1,20 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061ad81231e44b74a28c9d0c20d3dbae, type: 3}
-  m_Name: CD_Input
-  m_EditorClassIdentifier: 
-  Data:
-    HorizontalInputSpeed: 1.63
-    ClampValue:
-      x: 5
-      y: 5
-    ClampSpeed: 4
+version https://git-lfs.github.com/spec/v1
+oid sha256:a2a7dc1b56a8aab3c5b0dcda33d4afc6766521e424f0f458393fa51bfeeae3a7
+size 512

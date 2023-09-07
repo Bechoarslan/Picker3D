@@ -32,15 +32,25 @@ namespace RunTime.Controllers.UI
             CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
             CoreUISignals.Instance.onCloseAllPanels += OnCloseAllPanels;
         }
+        
+        [Button("Open Panel")]
+        private void OnOpenPanel(UIPanelTypes panelType, int value)
+        {
+            OnClosePanel(value);
+            Instantiate(Resources.Load<GameObject>($"Screens/{panelType}Panel"),layers[value]);
 
+        }
    
+        [Button("Close All Panels")]
         private void OnCloseAllPanels()
         {
             foreach (var layer in layers)
             { 
-                if (layer.childCount <= 0) return;
+                Debug.LogWarning("Get layer list: " + layer.name);
+                if (layer.childCount <= 0) continue;
 #if UNITY_EDITOR           
                 DestroyImmediate(layer.GetChild(0).gameObject);
+                Debug.LogWarning("Destroyed layer:" + layer.name);
                
 #else 
               Destroy(layer.GetChild(0).gameObject);
@@ -50,7 +60,7 @@ namespace RunTime.Controllers.UI
             }
         }
 
-      
+        [Button("One Panel")]
         private void OnClosePanel(int value)
         {
             if (layers[value].childCount <= 0) return;
@@ -63,12 +73,7 @@ namespace RunTime.Controllers.UI
         }
 
        
-        private void OnOpenPanel(UIPanelTypes panelType, int value)
-        {
-            OnClosePanel(value);
-            Instantiate(Resources.Load<GameObject>($"Screens/{panelType}Panel"),layers[value]);
-
-        }
+        
         
         private void OnDisable()
         {
