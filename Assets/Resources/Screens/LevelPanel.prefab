@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3843018561120575526}
+  - component: {fileID: 5163454298554190139}
   m_Layer: 5
   m_Name: LevelPanel
   m_TagString: Untagged
@@ -38,6 +39,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5163454298554190139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94694254486721809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d1e4e5045b49278e04cd73f79a4b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageImages:
+  - {fileID: 4177410741431295811}
+  - {fileID: 4229495361340484417}
+  - {fileID: 382054471877549530}
+  levelTexts:
+  - {fileID: 3522086157521878886}
+  - {fileID: 651889009532194234}
 --- !u!1 &1210845662849157572
 GameObject:
   m_ObjectHideFlags: 0

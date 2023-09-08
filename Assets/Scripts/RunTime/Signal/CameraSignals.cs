@@ -4,11 +4,11 @@ using UnityEngine.Events;
 
 namespace RunTime.Signal
 {
-    public class UISignals : MonoBehaviour
+    public class CameraSignals : MonoBehaviour
     {
         #region Singleton
 
-        public static UISignals Instance;
+        public static CameraSignals Instance;
 
         private void Awake()
         {
@@ -23,10 +23,6 @@ namespace RunTime.Signal
 
         #endregion
 
-
-        public UnityAction<byte> onSetStageColor = delegate {  };
-        public UnityAction<byte> onSetNewLevelValue = delegate { };
-        public UnityAction onPlay = delegate {  };
-
+        public UnityAction onSetCameraTarget = delegate {  };
     }
 }

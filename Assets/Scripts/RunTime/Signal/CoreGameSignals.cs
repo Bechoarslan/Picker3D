@@ -33,7 +33,9 @@ namespace RunTime.Signal
         public UnityAction onReset = delegate {  };
         public Func<byte> onGetLevelValue = delegate { return 0;};
         
-        
+        public UnityAction onStageAreaEntered = delegate {  };
+        public UnityAction<byte> onStageAreaSuccessful = delegate {  };
+        public UnityAction onFinishAreaEntered = delegate {  };
     }
     
     

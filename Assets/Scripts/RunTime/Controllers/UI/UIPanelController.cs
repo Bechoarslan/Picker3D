@@ -45,30 +45,22 @@ namespace RunTime.Controllers.UI
         private void OnCloseAllPanels()
         {
             foreach (var layer in layers)
-            { 
-                Debug.LogWarning("Get layer list: " + layer.name);
-                if (layer.childCount <= 0) continue;
-#if UNITY_EDITOR           
-                DestroyImmediate(layer.GetChild(0).gameObject);
-                Debug.LogWarning("Destroyed layer:" + layer.name);
-               
-#else 
-              Destroy(layer.GetChild(0).gameObject);
+            {
+                while (layer.childCount > 0)
+                {
+                    Destroy(layer.GetChild(0).gameObject);
+                }
+
                 
-#endif
 
             }
         }
-
         [Button("One Panel")]
         private void OnClosePanel(int value)
         {
             if (layers[value].childCount <= 0) return;
-#if UNITY_EDITOR           
-            DestroyImmediate(layers[value].GetChild(0).gameObject);
-#else 
               Destroy(layers[value].GetChild(0).gameObject);
-#endif
+
   
         }
 

@@ -100,7 +100,7 @@ namespace RunTime.Managers
             if (!_isAvailableForTouch) return;
             if (Input.GetMouseButtonUp(0) && !IsPointerOverUIElement())
             {
-                Debug.Log("AA");
+                
                 _inputReleasedCommand.Execute();
             }
             
