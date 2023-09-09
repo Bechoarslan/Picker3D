@@ -48,8 +48,8 @@ namespace RunTime.Managers
 
         private void OnSetCameraTarget()
         {
-            //var player = FindObjectsByType<PlayerManager>.transform;
-            //cinemachine.Follow = player;
+            var player = FindObjectOfType<PlayerManager>().transform;
+            cinemachine.Follow = player;
             //cinemachine.LookAt = player;
 
         }

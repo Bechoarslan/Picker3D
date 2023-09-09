@@ -28,16 +28,14 @@ namespace RunTime.Commands
 
         public void Execute()
         {
-            if (_isTouching)
-            {
-                if (_mousePosition != null)
-                {
+           
+                
                     Vector2 mouseDeltaPos = (Vector2)Input.mousePosition - _mousePosition.Value;
                     if (mouseDeltaPos.x > _horizontalInputSpeed)
                     {
                         _moveVector.x = _horizontalInputSpeed / 10f * mouseDeltaPos.x;
                     }
-                    else if (mouseDeltaPos.x > _horizontalInputSpeed)
+                    else if (mouseDeltaPos.x < _horizontalInputSpeed)
                     {
                         _moveVector.x = -_horizontalInputSpeed / 10f * -mouseDeltaPos.x;
                     }
@@ -56,7 +54,7 @@ namespace RunTime.Commands
                     });
                     Debug.LogWarning("Player Dragged");
                 }
-            }
+        
+            
         }
     }
-}

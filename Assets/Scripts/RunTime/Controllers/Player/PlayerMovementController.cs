@@ -73,6 +73,7 @@ namespace RunTime.Controllers.Player
 
         private void MovePlayer()
         {
+            
             var velocity = rigidbody.velocity;
             velocity = new Vector3(_xValue * _data.SidewaysSpeed, velocity.y, _data.ForwardSpeed);
             rigidbody.velocity = velocity;
@@ -80,6 +81,7 @@ namespace RunTime.Controllers.Player
             Vector3 position;
             position = new Vector3(Mathf.Clamp(position1.x, _clampValues.x, _clampValues.y), (position = rigidbody.position).y, position.z);
             rigidbody.position = position;
+            
 
         }
 
@@ -90,7 +92,7 @@ namespace RunTime.Controllers.Player
 
         internal void IsReadyToMove(bool condition)
         {
-            _isReadyToPlay = condition;
+            _isReadyToMove = condition;
         }
 
         internal void UpdateInputParams(HorizontalInputParams inputParams)

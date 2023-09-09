@@ -18,7 +18,7 @@ namespace RunTime.Commands
 
         public void Execute()
         {
-            _isTouching = true;
+            
             InputSignals.Instance.onInputTaken?.Invoke();
             if (!_isFirstTimeTouchTaken)
             {
@@ -27,7 +27,7 @@ namespace RunTime.Commands
             }
            
 
-            _mousePosition = Input.mousePosition;
+            
             Debug.LogWarning("Player is touching the screen");
 
         }
