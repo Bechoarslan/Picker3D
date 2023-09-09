@@ -31,7 +31,11 @@ namespace RunTime.Controllers.Player
         #endregion
 
 
-        
+        private void Awake()
+        {
+            scaleText.gameObject.SetActive(false);
+        }
+
 
         internal void SetMeshData(PlayerMeshData scaleData)
         {
@@ -45,6 +49,7 @@ namespace RunTime.Controllers.Player
 
         internal void ShowText()
         {
+            scaleText.gameObject.SetActive(true);
             scaleText.DOFade(1, 0f).SetEase(Ease.Flash).OnComplete(() => scaleText.DOFade(0, 0).SetDelay(0.65f));
 
             scaleText.rectTransform.DOAnchorPosY(.85f, .65f).SetRelative(true).SetEase(Ease.OutBounce).OnComplete(() =>

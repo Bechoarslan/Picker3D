@@ -42,16 +42,17 @@ namespace RunTime.Managers
             _levelDestroyerCommand = new LevelDestroyerCommand(levelHolder);
 
         }
+        private LevelData GetLevelData()
+        {
+            return Resources.Load<CD_Level>("Data/CD_Level").Levels[_currentLevel];
+        }
 
         private byte GetActiveLevel()
         {
             return (byte)_currentLevel;
         }
 
-        private LevelData GetLevelData()
-        {
-            return Resources.Load<CD_Level>("Data/CD_Level").Levels[_currentLevel];
-        }
+       
 
         private void OnEnable()
         {
@@ -69,7 +70,7 @@ namespace RunTime.Managers
 
         private byte GetLevelValue()
         {
-            return (byte) _currentLevel;
+            return (byte)((byte) _currentLevel % totalLevelCount);
         }
 
         private void OnNextLevel()
@@ -77,13 +78,13 @@ namespace RunTime.Managers
             _currentLevel++;
             CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
             CoreGameSignals.Instance.onReset?.Invoke();
-            CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)_currentLevel);
+            CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
         }
 
         private void OnRestartLevel()
         {   CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
             CoreGameSignals.Instance.onReset?.Invoke();;
-            CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)_currentLevel);
+            CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
             
         }
         

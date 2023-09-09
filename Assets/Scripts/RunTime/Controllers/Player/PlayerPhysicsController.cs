@@ -1,4 +1,6 @@
 using System;
+using DG.Tweening;
+using RunTime.Controllers.Pool;
 using RunTime.Managers;
 using RunTime.Signal;
 using UnityEngine;
@@ -13,6 +15,7 @@ namespace RunTime.Controllers.Player
 
         [SerializeField] private PlayerManager manager;
         [SerializeField] private new Rigidbody rigidbody;
+        [SerializeField] private Collider _collider;
         
 
         #endregion
@@ -37,6 +40,21 @@ namespace RunTime.Controllers.Player
                 manager.ForceCommand.Execute();
                 CoreGameSignals.Instance.onStageAreaEntered?.Invoke();
                 InputSignals.Instance.onDisableInput?.Invoke();
+                DOVirtual.DelayedCall(3, () =>
+                {
+                    var result = other.transform.parent.GetComponentInChildren<PoolController>()
+                        .TakeResults(manager.StageValue);
+                    if (result)
+                    {
+                        CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
+                        InputSignals.Instance.onEnableInput?.Invoke();
+                    }
+                    else
+                    {
+                        CoreGameSignals.Instance.onLevelFail?.Invoke();
+                    }
+                });
+                return;
             }
 
             if (other.CompareTag(_finish))

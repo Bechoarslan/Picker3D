@@ -51,7 +51,7 @@ namespace RunTime.Handlers
                     _button.onClick.AddListener(_manager.NextLevel);
                     break;
                 case UIEventSubscriberTypes.OnFailLevel:
-                    _button.onClick.AddListener(_manager.LevelFailed);
+                    _button.onClick.AddListener(_manager.RestartLevel);
                     break;
                 
                 default:
@@ -72,7 +72,7 @@ namespace RunTime.Handlers
                     _button.onClick.RemoveListener(_manager.NextLevel);
                     break;
                 case UIEventSubscriberTypes.OnFailLevel:
-                    _button.onClick.RemoveListener(_manager.LevelFailed);
+                    _button.onClick.RemoveListener(_manager.RestartLevel);
                     break;
                 
                 default:

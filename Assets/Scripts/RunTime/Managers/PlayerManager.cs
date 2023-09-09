@@ -50,7 +50,11 @@ namespace RunTime.Managers
 
         private void Init()
         {
-            ForceCommand = new ForceBallsToPoolCommand(this, _data.PlayerMeshData);
+            ForceCommand = new ForceBallsToPoolCommand(this, _data.PlayerForceData);
+        }
+        private PlayerData GetPlayerData()
+        {
+            return Resources.Load<CD_Player>("Data/CD_Player").Data;
         }
 
         private void SetDataToController()
@@ -59,10 +63,7 @@ namespace RunTime.Managers
             playerMeshController.SetMeshData(_data.PlayerMeshData);
         }
 
-        private PlayerData GetPlayerData()
-        {
-            return Resources.Load<CD_Player>("Data/CD_Player").Data;
-        }
+        
 
         private void OnEnable()
         {
@@ -71,8 +72,8 @@ namespace RunTime.Managers
 
         private void SubscribeEvent()
         {
-            InputSignals.Instance.onInputReleased += () => playerMovementController.IsReadyToMove(false);
             InputSignals.Instance.onInputTaken += () => playerMovementController.IsReadyToMove(true);
+            InputSignals.Instance.onInputReleased += () => playerMovementController.IsReadyToMove(false);
             InputSignals.Instance.onInputDragged += OnInputDragged;
             UISignals.Instance.onPlay += () => playerMovementController.IsReadyToPlay(true);
             CoreGameSignals.Instance.onReset += OnReset;

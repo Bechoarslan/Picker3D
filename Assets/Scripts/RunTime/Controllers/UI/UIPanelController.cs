@@ -46,10 +46,10 @@ namespace RunTime.Controllers.UI
         {
             foreach (var layer in layers)
             {
-                while (layer.childCount > 0)
-                {
+                if (layer.childCount <= 0) continue;
+                
                     Destroy(layer.GetChild(0).gameObject);
-                }
+                
 
                 
 
