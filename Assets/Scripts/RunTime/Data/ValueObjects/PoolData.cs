@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RunTime.Data.ValueObjects
 {
@@ -6,5 +7,10 @@ namespace RunTime.Data.ValueObjects
     public struct PoolData
     {
         public byte RequiredObjectCount;
+        
+
     }
+   
+
+    
 }

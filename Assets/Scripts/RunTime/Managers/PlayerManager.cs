@@ -82,7 +82,15 @@ namespace RunTime.Managers
             CoreGameSignals.Instance.onStageAreaEntered += () =>playerMovementController.IsReadyToPlay(false);
             CoreGameSignals.Instance.onLevelSuccessful +=() => playerMovementController.IsReadyToPlay(false);
             CoreGameSignals.Instance.onLevelFail += () => playerMovementController.IsReadyToPlay(false);
+            CoreGameSignals.Instance.onMiniGameAreaEntered += OnMiniGameAreaEntered;
+            CoreGameSignals.Instance.onSetMultiplier += playerPhysicsController.SetMultiplier;
+            CoreGameSignals.Instance.onGetMultiplyValue += playerPhysicsController.GetMultiplyValue;
+            
+
+
         }
+
+       
 
         private void OnInputDragged(HorizontalInputParams inputParams)
         {
@@ -97,6 +105,13 @@ namespace RunTime.Managers
             playerMeshController.ScaleUpPlayer();
             playerMeshController.PlayConfettiParticle();
             playerMeshController.ShowText();
+            
+        }
+        private void OnMiniGameAreaEntered(short value)
+        {
+           playerMovementController.IsReadyToPlay(false);
+           var newForwardSpeed = (_data.MovementData.ForwardSpeed * value / 100) + _data.MovementData.ForwardSpeed;
+           _data.MovementData.ForwardSpeed = newForwardSpeed;
         }
 
         private void OnFinishAreaEntered()
@@ -112,6 +127,8 @@ namespace RunTime.Managers
             playerMovementController.OnReset();
             playerMeshController.OnReset();
             playerPhysicsController.OnReset();
+            _data.MovementData.ForwardSpeed = 9;
+
         }
 
         private void UnSubscribeEvent()
@@ -126,6 +143,10 @@ namespace RunTime.Managers
             CoreGameSignals.Instance.onStageAreaEntered -= () =>playerMovementController.IsReadyToPlay(false);
             CoreGameSignals.Instance.onLevelSuccessful -= () =>playerMovementController.IsReadyToPlay(false);
             CoreGameSignals.Instance.onLevelFail -= () =>playerMovementController.IsReadyToPlay(false);
+            CoreGameSignals.Instance.onMiniGameAreaEntered -= OnMiniGameAreaEntered;
+            CoreGameSignals.Instance.onSetMultiplier -= playerPhysicsController.SetMultiplier;
+            CoreGameSignals.Instance.onGetMultiplyValue -= playerPhysicsController.GetMultiplyValue;
+           
             
         }
 

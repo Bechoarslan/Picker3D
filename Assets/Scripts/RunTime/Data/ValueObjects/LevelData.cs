@@ -7,5 +7,8 @@ namespace RunTime.Data.ValueObjects
     public struct LevelData
     {
         public List<PoolData> PoolList;
+        public short TotalCollectableCount;
+        public List<short> CollectedObjectCount;
+
     }
 }

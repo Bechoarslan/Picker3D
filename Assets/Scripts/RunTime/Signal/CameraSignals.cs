@@ -23,6 +23,6 @@ namespace RunTime.Signal
 
         #endregion
 
-        public UnityAction onSetCameraTarget = delegate {  };
+       public Action onSetCameraTarget = delegate {  };
     }
 }

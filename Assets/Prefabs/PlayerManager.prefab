@@ -49,6 +49,7 @@ MonoBehaviour:
   manager: {fileID: 8083289904440802740}
   rigidbody: {fileID: 457731915505746289}
   _collider: {fileID: 5860717830730904667}
+  _multiplyController: {fileID: 0}
 --- !u!54 &457731915505746289
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -77,7 +78,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.2292576, y: 0.4195218, z: 3.129153}
-  m_Center: {x: 0.075350046, y: -1.0302391, z: 0.81457627}
+  m_Center: {x: 0.075350046, y: -1.47, z: 0.81457627}
 --- !u!1 &5672414957723385581
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,8 @@ namespace RunTime.Signal
         public UnityAction<byte> onSetStageColor = delegate {  };
         public UnityAction<byte> onSetNewLevelValue = delegate { };
         public UnityAction onPlay = delegate {  };
+        public UnityAction<byte> onSetPercantageValue = delegate {  };
+       
 
     }
 }

@@ -18,6 +18,8 @@ namespace RunTime.Controllers.UI
 
         [SerializeField] private List<Image> stageImages = new List<Image>();
         [SerializeField] private List<TextMeshProUGUI> levelTexts = new List<TextMeshProUGUI>();
+        [SerializeField] private TextMeshProUGUI percentageText;
+        [SerializeField] private Image percantageImage;
 
         #endregion
 
@@ -32,9 +34,17 @@ namespace RunTime.Controllers.UI
         {
             UISignals.Instance.onSetNewLevelValue += OnSetNewLevelValue;
             UISignals.Instance.onSetStageColor += OnSetStageColor;
+            UISignals.Instance.onSetPercantageValue += OnSetPercantageValue;
+           
+            
         }
 
-       
+        private void OnSetPercantageValue(byte percentageValue)
+        {
+            percentageText.text = "% " + percentageValue.ToString();
+        }
+
+
         [Button]
         private void OnSetStageColor(byte levelColor)
         {
@@ -57,6 +67,8 @@ namespace RunTime.Controllers.UI
         {
             UISignals.Instance.onSetNewLevelValue -= OnSetNewLevelValue;
             UISignals.Instance.onSetStageColor -= OnSetStageColor;
+           
+            
         }
 
         private void OnDisable()

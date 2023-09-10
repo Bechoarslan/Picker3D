@@ -1,4 +1,5 @@
-﻿using RunTime.Commands;
+﻿using System;
+using RunTime.Commands;
 using RunTime.Data.UnityObjects;
 using RunTime.Data.ValueObjects;
 using RunTime.Enums;
@@ -22,6 +23,7 @@ namespace RunTime.Managers
 
         private LevelData _levelData;
         private short _currentLevel;
+        
 
         private LevelLoaderCommand _levelLoaderCommand;
         private LevelDestroyerCommand _levelDestroyerCommand;
@@ -34,8 +36,10 @@ namespace RunTime.Managers
         {
             _levelData = GetLevelData();
             _currentLevel = GetActiveLevel();
+            
             Init();
         }
+        
         private void Init()
         {
             _levelLoaderCommand = new LevelLoaderCommand(levelHolder);
@@ -46,14 +50,11 @@ namespace RunTime.Managers
         {
             return Resources.Load<CD_Level>("Data/CD_Level").Levels[_currentLevel];
         }
-
         private byte GetActiveLevel()
         {
             return (byte)_currentLevel;
         }
-
-       
-
+        
         private void OnEnable()
         {
             SubscribeEvent();
@@ -66,7 +67,12 @@ namespace RunTime.Managers
             CoreGameSignals.Instance.onNextLevel += OnNextLevel;
             CoreGameSignals.Instance.onRestartLevel += OnRestartLevel;
             CoreGameSignals.Instance.onGetLevelValue += GetLevelValue;
+            
+            
         }
+
+        
+
 
         private byte GetLevelValue()
         {
