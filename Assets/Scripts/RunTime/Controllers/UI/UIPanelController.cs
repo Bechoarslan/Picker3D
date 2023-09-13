@@ -50,10 +50,11 @@ namespace RunTime.Controllers.UI
                 
                     Destroy(layer.GetChild(0).gameObject);
                 
-
+            
                 
-
+            
             }
+            
         }
         [Button("One Panel")]
         private void OnClosePanel(int value)

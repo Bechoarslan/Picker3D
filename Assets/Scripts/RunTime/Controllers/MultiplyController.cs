@@ -1,9 +1,11 @@
+
 using System;
 using System.Collections.Generic;
+
 using RunTime.Data.UnityObjects;
-using RunTime.Enums;
+
 using RunTime.Signal;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 namespace RunTime.Controllers
@@ -20,32 +22,34 @@ namespace RunTime.Controllers
         #endregion
         #endregion
 
-        private void Awake()
-        {
-           SetDictionary();
-        }
-
+       
         private void OnEnable()
         {
             UISignals.Instance.onPlay += GetDictionary;
-            
+            CoreGameSignals.Instance.onReset += OnReset;
+
+
         }
+
+      
 
         private void GetDictionary()
         {
+            SetDictionary();
             CoreGameSignals.Instance.onSetMultiplier?.Invoke(_multiplier);
+           
+            
         }
-
         private void OnDisable()
         {
             
-            UISignals.Instance.onPlay += GetDictionary;
+            UISignals.Instance.onPlay -= GetDictionary;
+            CoreGameSignals.Instance.onReset -= OnReset;
         }
-
-
+        
         private void SetDictionary()
         {
-            for (int i = 0; i < multiplyTransform.Count; i++)
+            for (var i = 0; i < multiplyTransform.Count; i++)
             {
                 Transform newTransform = multiplyTransform[i];
                 float newFloat = Resources.Load<CD_Multi>("Data/CD_Multi")._data.multiplyValues[i];
@@ -53,10 +57,15 @@ namespace RunTime.Controllers
                 _multiplier.Add(newTransform, newFloat);
 
             }
+            
         }
         
-       
+        private void OnReset()
+        {
+            _multiplier.Clear();
+        }
 
+        
     }
         }
     

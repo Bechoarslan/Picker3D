@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using RunTime.Signal;
@@ -20,6 +21,8 @@ namespace RunTime.Controllers.UI
         [SerializeField] private List<TextMeshProUGUI> levelTexts = new List<TextMeshProUGUI>();
         [SerializeField] private TextMeshProUGUI percentageText;
         [SerializeField] private Image percantageImage;
+        [SerializeField] private TextMeshProUGUI coinText;
+       
 
         #endregion
 
@@ -30,16 +33,26 @@ namespace RunTime.Controllers.UI
             SubscribeEvents();
         }
 
+       
+
         private void SubscribeEvents()
         {
             UISignals.Instance.onSetNewLevelValue += OnSetNewLevelValue;
             UISignals.Instance.onSetStageColor += OnSetStageColor;
             UISignals.Instance.onSetPercantageValue += OnSetPercantageValue;
+            UISignals.Instance.onSetCoinText += OnSetCoinText;
            
             
+           
         }
 
-        private void OnSetPercantageValue(byte percentageValue)
+        private void OnSetCoinText(float coinValue)
+        {
+           coinText.text = "Coin:" + coinValue.ToString();
+        }
+
+
+        private void OnSetPercantageValue(float percentageValue)
         {
             percentageText.text = "% " + percentageValue.ToString();
         }
@@ -67,6 +80,8 @@ namespace RunTime.Controllers.UI
         {
             UISignals.Instance.onSetNewLevelValue -= OnSetNewLevelValue;
             UISignals.Instance.onSetStageColor -= OnSetStageColor;
+            UISignals.Instance.onSetPercantageValue -= OnSetPercantageValue;
+            UISignals.Instance.onSetCoinText -= OnSetCoinText;
            
             
         }

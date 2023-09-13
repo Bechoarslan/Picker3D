@@ -1,6 +1,7 @@
 using System;
 using RunTime.Enums;
 using RunTime.Signal;
+using StylizedWater2;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -29,11 +30,14 @@ namespace RunTime.Managers
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Level,0);
             UISignals.Instance.onSetNewLevelValue?.Invoke(levelValue);
+            UISignals.Instance.onSetCoinText?.Invoke((float)UISignals.Instance.onGetCoinValue?.Invoke());
+           
         }
 
         private void OnLevelSuccesful()
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Win,2);
+            UISignals.Instance.onSetCoinText?.Invoke((float)UISignals.Instance.onGetCoinValue?.Invoke());
         }
 
         private void OnLevelFail()
@@ -63,6 +67,7 @@ namespace RunTime.Managers
         {
             CoreGameSignals.Instance.onNextLevel?.Invoke();
             CoreGameSignals.Instance.onReset?.Invoke();
+            
         }
 
         public void RestartLevel()
@@ -78,6 +83,9 @@ namespace RunTime.Managers
             CoreUISignals.Instance.onClosePanel?.Invoke(1);
             InputSignals.Instance.onEnableInput?.Invoke();
             CameraSignals.Instance.onSetCameraTarget?.Invoke();
+            
+            
+            
         }
         private void OnStageAreaSuccesful(byte stageValue)
         {

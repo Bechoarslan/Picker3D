@@ -4,6 +4,8 @@ using RunTime.Data.UnityObjects;
 using RunTime.Data.ValueObjects;
 using RunTime.Enums;
 using RunTime.Signal;
+using Sirenix.OdinInspector;
+using StylizedWater2;
 using UnityEngine;
 
 namespace RunTime.Managers
@@ -79,18 +81,24 @@ namespace RunTime.Managers
             return (byte)((byte) _currentLevel % totalLevelCount);
         }
 
+        [Button("NextLevel")]
         private void OnNextLevel()
         {
             _currentLevel++;
             CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
             CoreGameSignals.Instance.onReset?.Invoke();
             CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
+            UISignals.Instance.onSetNewLevelValue?.Invoke((byte)(_currentLevel));
+            
         }
 
+        [Button("RestartLevel")]
         private void OnRestartLevel()
         {   CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
             CoreGameSignals.Instance.onReset?.Invoke();;
             CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
+            UISignals.Instance.onSetNewLevelValue?.Invoke((byte)(_currentLevel));
+            
             
         }
         

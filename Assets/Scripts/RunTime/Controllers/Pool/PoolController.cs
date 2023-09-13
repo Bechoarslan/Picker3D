@@ -23,7 +23,8 @@ namespace RunTime.Controllers.Pool
         [SerializeField] private TextMeshPro poolText;
         [SerializeField] private byte stadeID;
         [SerializeField] private new Renderer renderer;
-        [SerializeField] private float3 poolAfterColor = new float3(0.1607843f, 0.3144797f, 0.6039216f);
+        [SerializeField] private Color poolAfterColor = new Color(0.1607843f, 0.3144797f, 0.6039216f);
+        [SerializeField] private ParticleSystem _destroyParticle;
 
         #endregion
 
@@ -72,8 +73,11 @@ namespace RunTime.Controllers.Pool
             CoreGameSignals.Instance.onReset += OnReset;
             CoreGameSignals.Instance.onStageAreaSuccessful += OnStageAreaSuccessful;
             CoreGameSignals.Instance.onGetCollectedObjectValue += OnGetCollectedObjectValue;
+           
             
         }
+
+      
 
         private short OnGetCollectedObjectValue()
         {
@@ -84,7 +88,6 @@ namespace RunTime.Controllers.Pool
                 
             }
             
-
             return (short)result;
         }
 
@@ -92,24 +95,24 @@ namespace RunTime.Controllers.Pool
         {
             if(stageValue != stadeID) return;
             _levelData.CollectedObjectCount.Add(_collectedCount);
+            
         }
         
 
+        [Button("Particle")]
         private void OnActiveTweens(byte stageValue)
         {
-            
             if (stageValue != stadeID) return;
             foreach (var tween in tween)
             {
                 tween.DOPlay();
                 
-
             }
         }
         private void OnChangePoolColor(byte stageValue)
         {
             if (stageValue != stadeID) return;
-            renderer.material.DOColor(new Color(poolAfterColor.x, poolAfterColor.y, poolAfterColor.z, 1), .5f)
+            renderer.material.DOColor(new Color(poolAfterColor.r,poolAfterColor.g,poolAfterColor.b,1f), .5f)
                 .SetEase(Ease.Flash).SetRelative(false);
         }
         
@@ -125,6 +128,7 @@ namespace RunTime.Controllers.Pool
         
         public bool TakeResults(byte managerStateValue)
         {
+           
             if (stadeID == managerStateValue)
             {
                 return _collectedCount >= _data.RequiredObjectCount;
@@ -138,6 +142,12 @@ namespace RunTime.Controllers.Pool
             if (!other.CompareTag(_collectable)) return;
             _collectedCount++;
             SetCollectedAmountToPool();
+            DOVirtual.DelayedCall(1.5f, () =>
+            {
+                other.gameObject.SetActive(false);
+                _destroyParticle.Play();
+            });
+            
         }
         
         private void SetCollectedAmountToPool()
@@ -151,6 +161,9 @@ namespace RunTime.Controllers.Pool
             if (other.CompareTag(_collectable)) return;
             _collectedCount--;
             SetCollectedAmountToPool();
+          
+           
+
         }
 
         private void UnSubscribeEvents()
@@ -158,7 +171,9 @@ namespace RunTime.Controllers.Pool
             CoreGameSignals.Instance.onStageAreaSuccessful -= OnActiveTweens;
             CoreGameSignals.Instance.onStageAreaSuccessful -= OnChangePoolColor;
             CoreGameSignals.Instance.onReset -= OnReset;
+            CoreGameSignals.Instance.onStageAreaSuccessful -= OnStageAreaSuccessful;
             CoreGameSignals.Instance.onGetCollectedObjectValue -= OnGetCollectedObjectValue;
+
         }
 
         private void OnDisable()
@@ -169,7 +184,9 @@ namespace RunTime.Controllers.Pool
         private void OnReset()
         {
             _levelData.CollectedObjectCount.Clear();
-            
+            _destroyParticle.Clear();
+           
+
         }
 
 

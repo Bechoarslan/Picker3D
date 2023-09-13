@@ -1,9 +1,8 @@
-using System;
+
 using System.Collections.Generic;
 using DG.Tweening;
 using RunTime.Controllers.Pool;
-using RunTime.Data.UnityObjects;
-using RunTime.Data.ValueObjects;
+
 using RunTime.Managers;
 using RunTime.Signal;
 using Sirenix.OdinInspector;
@@ -20,7 +19,6 @@ namespace RunTime.Controllers.Player
         [SerializeField] private PlayerManager manager;
         [SerializeField] private new Rigidbody rigidbody;
         [SerializeField] private Collider _collider;
-        
         Dictionary<Transform, float> dic = new Dictionary<Transform, float>();
         
         
@@ -30,19 +28,14 @@ namespace RunTime.Controllers.Player
         private readonly string _stageArea = "StageArea";
         private readonly string _finish = "FinishArea";
         private readonly string _miniGame = "MiniGameArea";
-        private float _multiplyValue = 0;
-
+        private float _multiplyValue = 0; 
+        private bool isEnded = false;
+     
 
         #endregion
 
         #endregion
         
-
-        public void SetMultiplier(Dictionary<Transform, float> newDictionary)
-        {
-            dic = newDictionary;
-            
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -58,15 +51,23 @@ namespace RunTime.Controllers.Player
                 {
                     var result = other.transform.parent.GetComponentInChildren<PoolController>()
                         .TakeResults(manager.StageValue);
+                    
                     if (result)
                     {
-                        CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
-                        InputSignals.Instance.onEnableInput?.Invoke();
-                        UISignals.Instance.onSetPercantageValue?.Invoke((byte)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke());
-                      
+                        
+                        DOVirtual.DelayedCall(1, () =>
+                        {
+                            CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
+                            InputSignals.Instance.onEnableInput?.Invoke();
+                            UISignals.Instance.onSetPercantageValue?.Invoke((byte)CoreGameSignals.Instance
+                                .onGetCollectedObjectValue?.Invoke());
+
+                        });
+
                     }
                     else
                     {
+                        
                         
                         CoreGameSignals.Instance.onLevelFail?.Invoke();
                     }
@@ -94,29 +95,40 @@ namespace RunTime.Controllers.Player
                 {
                     CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
                     InputSignals.Instance.onEnableInput?.Invoke();
+                    isEnded = true;
                     DOVirtual.DelayedCall((float)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke() / 10, () =>
-                    {
+                    {    
                         CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
+                        
+
                     });
-
-
+                    
                 });
             }
-            
-            foreach (var item in dic)
+
+            if (isEnded)
             {
-                
-                if (item.Key == null || item.Value == null) return;
-                
-                    
-                if (other.transform == item.Key)
+                foreach (var item in dic)
                 {
-                    _multiplyValue = (short)item.Value;
+                    if (item.Key == null) return;
+                
+                    if (other.transform == item.Key)
+                    {
+                        _multiplyValue = item.Value;
+                        Debug.Log(_multiplyValue);
+                        
+
+                    }
+                
 
                 }
                 
-
             }
+            
+        }
+        public void SetMultiplier(Dictionary<Transform, float> newDictionary)
+        {
+            dic = newDictionary;
             
         }
         public float GetMultiplyValue()
@@ -124,12 +136,18 @@ namespace RunTime.Controllers.Player
             return _multiplyValue;
         }
 
-        internal void OnReset()
+
+        public void OnReset()
         {
             
         }
 
-
+        
+            
+            
+            
+        }
+    
         
     }
-}
+
