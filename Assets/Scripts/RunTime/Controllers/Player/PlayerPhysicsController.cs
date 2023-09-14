@@ -6,6 +6,7 @@ using RunTime.Controllers.Pool;
 using RunTime.Managers;
 using RunTime.Signal;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities.Editor;
 using UnityEngine;
 
 namespace RunTime.Controllers.Player
@@ -86,36 +87,73 @@ namespace RunTime.Controllers.Player
 
             if (other.CompareTag(_miniGame))
             {
+                if (CoreGameSignals.Instance.onWhichMiniGameAreaEntered?.Invoke() == 1)
+                { 
+                    Debug.Log("Entered 1");
+                    CoreGameSignals.Instance.onStageAreaEntered?.Invoke();
+                    CoreGameSignals.Instance.onMiniGameAreaEntered?.Invoke((short)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke());
+                    InputSignals.Instance.onDisableInput?.Invoke();
                 
-               CoreGameSignals.Instance.onStageAreaEntered?.Invoke();
-                CoreGameSignals.Instance.onMiniGameAreaEntered?.Invoke((short)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke());
-                InputSignals.Instance.onDisableInput?.Invoke();
-                
-                DOVirtual.DelayedCall(3,() =>
-                {
-                    CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
-                    InputSignals.Instance.onEnableInput?.Invoke();
-                    isEnded = true;
-                    DOVirtual.DelayedCall((float)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke() / 10, () =>
-                    {    
-                        CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
+                    DOVirtual.DelayedCall(3,() =>
+                    {
+                        CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
+                        InputSignals.Instance.onEnableInput?.Invoke();
+                        isEnded = true;
+                        
+                        DOVirtual.DelayedCall((float)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke() / 10, () =>
+                        {    
+                            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
                         
 
-                    });
+                        });
                     
-                });
-            }
+                    });
 
+                   
+                    
+                }
+                   
+                
+                else
+                { 
+                    Debug.Log("Entered 0 ");
+                    CoreGameSignals.Instance.onStageAreaEntered?.Invoke();
+                    CoreGameSignals.Instance.onMiniGameAreaEntered?.Invoke((short)CoreGameSignals.Instance.onGetCollectedObjectValue?.Invoke());
+                    InputSignals.Instance.onDisableInput?.Invoke();
+                    DOVirtual.DelayedCall(3,() =>
+                    {
+                        CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
+                        InputSignals.Instance.onEnableInput?.Invoke();
+                        isEnded = true;
+                       
+                        
+                        
+                       
+                       
+                    
+                    });
+                }
+               
+                   
+                
+              
+            }
             if (isEnded)
             {
+               
                 foreach (var item in dic)
                 {
                     if (item.Key == null) return;
+                    
                 
                     if (other.transform == item.Key)
                     {
-                        _multiplyValue = item.Value;
                         Debug.Log(_multiplyValue);
+                        _multiplyValue = item.Value;
+                        if(CoreGameSignals.Instance.onWhichMiniGameAreaEntered?.Invoke() == 0)
+                            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
+                             
+                                    
                         
 
                     }
@@ -124,6 +162,8 @@ namespace RunTime.Controllers.Player
                 }
                 
             }
+
+            
             
         }
         public void SetMultiplier(Dictionary<Transform, float> newDictionary)

@@ -1,16 +1,23 @@
-using System;
 using RunTime.Signal;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
 
-namespace RunTime.Controllers
+namespace RunTime.Controllers.Objects
 {
     public class CoinController : MonoBehaviour
     {
+        #region Self Variables
+
+        #region Private Varriables
+
         private float _currentCoin = 0;
         [SerializeField] private float _winCoin;
         private float _multiplyiedValue;
+
+        #endregion
+
+        #endregion
+        
 
         private void OnEnable()
         {

@@ -109,9 +109,21 @@ namespace RunTime.Managers
         }
         private void OnMiniGameAreaEntered(short value)
         {
-           playerMovementController.IsReadyToPlay(false);
-           var newForwardSpeed = (_data.MovementData.ForwardSpeed * value / 100) + _data.MovementData.ForwardSpeed;
-           _data.MovementData.ForwardSpeed = newForwardSpeed;
+            if (CoreGameSignals.Instance.onWhichMiniGameAreaEntered?.Invoke() == 1)
+            {
+                playerMovementController.IsReadyToPlay(false);
+                var newForwardSpeed = (_data.MovementData.ForwardSpeed * value / 100) + _data.MovementData.ForwardSpeed;
+                _data.MovementData.ForwardSpeed = newForwardSpeed;
+                
+            }
+            else
+            {
+                playerMovementController.IsReadyToPlay(false);
+                var newForwardSpeed = (_data.MovementData.ForwardSpeed * value /50) + _data.MovementData.ForwardSpeed;
+                _data.MovementData.ForwardSpeed = newForwardSpeed;
+                
+            }
+           
         }
 
         private void OnFinishAreaEntered()

@@ -1,14 +1,9 @@
-
-using System;
 using System.Collections.Generic;
-
 using RunTime.Data.UnityObjects;
-
 using RunTime.Signal;
-
 using UnityEngine;
 
-namespace RunTime.Controllers
+namespace RunTime.Controllers.Objects
 {
    
     public class MultiplyController : MonoBehaviour

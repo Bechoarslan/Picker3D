@@ -38,12 +38,14 @@ namespace RunTime.Signal
         public UnityAction<byte> onStageAreaSuccessful = delegate {  };
         public UnityAction onFinishAreaEntered = delegate {  } ;
         public UnityAction<short> onMiniGameAreaEntered = delegate {  };
-        public UnityAction onWaitObjectandParticleSystem = delegate {  };
+        
         public Func<short> onGetCollectedObjectValue = delegate { return 0; };
         
         public UnityAction<Dictionary<Transform,float>> onSetMultiplier = delegate {  };
         
         public Func<float> onGetMultiplyValue = delegate { return 0; };
+        
+        public Func<byte> onWhichMiniGameAreaEntered = delegate { return 0; };
        
         
         

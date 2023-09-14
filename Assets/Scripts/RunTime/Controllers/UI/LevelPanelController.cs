@@ -20,7 +20,7 @@ namespace RunTime.Controllers.UI
         [SerializeField] private List<Image> stageImages = new List<Image>();
         [SerializeField] private List<TextMeshProUGUI> levelTexts = new List<TextMeshProUGUI>();
         [SerializeField] private TextMeshProUGUI percentageText;
-        [SerializeField] private Image percantageImage;
+        [SerializeField] private Slider percantageSlider;
         [SerializeField] private TextMeshProUGUI coinText;
        
 
@@ -55,6 +55,7 @@ namespace RunTime.Controllers.UI
         private void OnSetPercantageValue(float percentageValue)
         {
             percentageText.text = "% " + percentageValue.ToString();
+            percantageSlider.value += percentageValue;
         }
 
 
